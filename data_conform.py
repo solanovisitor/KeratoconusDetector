@@ -17,11 +17,12 @@ def input_fn(args):
     dfs = []
     for folder in lista:
         final_list = os.listdir(folder)
-        for filename in final_list:
-            file_path = os.path.join(folder, filename)
-            data = pd.read_csv(file_path, delimiter=';', iterator=True, chunksize=1000)
-            df = pd.concat(data, ignore_index=True)
-            dfs.append(df)
+    
+    for filename in final_list:
+        file_path = os.path.join(folder, filename)
+        data = pd.read_csv(file_path, delimiter=';', iterator=True, chunksize=1000)
+        df = pd.concat(data, ignore_index=True)
+        dfs.append(df)
   
     return dfs, mother_dirs
 
