@@ -1,6 +1,10 @@
 # Data conformer for Galilei G6
 
+<<<<<<< HEAD
 This is a software to pull data from Galilei G6, used for eye biometrics.
+=======
+This is a software to pull data from Galilei G6, an ophtamologic equipment used for eye biometrics.
+>>>>>>> ec4104e8146b43f285642ea6addbe3c8b124bd29
 
 1. Clone the repository in your local machine.
 2. Open the 'projeto_oft' folder in your terminal
