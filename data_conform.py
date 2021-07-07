@@ -8,18 +8,22 @@ from parser_script import PathType
 
 
 def input_fn(args):
-    dir = f'patient_{args.patient}'
-    full_path = os.path.join(args.path, dir)
-    lista = os.listdir(full_path)
+    mother_dirs = os.listdir(args.path)
+    lista = []
+    for dir in mother_dirs:
+        folder_path = os.path.join(args.path, dir)
+        lista.append(folder_path)
     
     dfs = []
-    for filename in lista:
-        final_path = os.path.join(full_path, filename)
-        data = pd.read_csv(final_path, delimiter=';', iterator=True, chunksize=1000)
-        df = pd.concat(data, ignore_index=True)
-        dfs.append(df)
-        
-    return dfs
+    for folder in lista:
+        final_list = os.listdir(folder)
+        for filename in final_list:
+            file_path = os.path.join(folder, filename)
+            data = pd.read_csv(file_path, delimiter=';', iterator=True, chunksize=1000)
+            df = pd.concat(data, ignore_index=True)
+            dfs.append(df)
+  
+    return dfs, mother_dirs
 
 
 def preprocess(dfs):
@@ -30,11 +34,13 @@ def preprocess(dfs):
     return perm
 
 def generate_data(args):
-    dfs = input_fn(args)
+    dfs, mother_dirs = input_fn(args)
     perm = preprocess(dfs)
-    out_path = f'output_patient_{args.patient}.csv'
-    output_path = os.path.join(args.out, out_path)
-    output_csv = perm.to_csv(output_path, index=False)
+    comp = len(mother_dirs)
+    for x in range(comp):
+        out_name = f'output_patient_{x}.csv'
+        output_path = os.path.join(args.out, out_name)
+        output_csv = perm.to_csv(output_path, index=False)
 
     return output_csv
 
@@ -57,11 +63,10 @@ if __name__ == '__main__':
                     'Total-POWER_ [D]']
 
     parser = argparse.ArgumentParser(description='Conform data to a new csv.')
-    parser.add_argument('--patient', required=True, help='The ID number of the patient.')
     parser.add_argument('--path', type=PathType(exists=True, type='dir'), required=True, help='The path for your folder containing all patients.')
     parser.add_argument('--out', type=PathType(exists=True, type='dir'), required=True, help='The path for your output csv file.')
 
     args = parser.parse_args()
 
-    with tqdm(total=100, file=sys.stdout) as pgbar:
+    with tqdm(total=1, file=sys.stdout) as pgbar:
         generate_data(args)
