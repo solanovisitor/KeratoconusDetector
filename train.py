@@ -75,7 +75,7 @@ def train_model(args):
   
   model, X_train, X_test, y_train, y_test = split(X, Y)
 
-  model.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=['accuracy'])
+  model.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=[[tf.keras.metrics.CategoricalAccuracy()], [tf.keras.metrics.AUC()]])
 
   callback_list = []
 
