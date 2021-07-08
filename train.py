@@ -6,7 +6,6 @@ import pandas as pd
 from tensorflow import keras
 from tensorflow.keras import layers
 from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import MinMaxScaler
 
 def input_fn(args):
 
