@@ -79,7 +79,7 @@ def train_model(args):
 
   model = lstm()
   
-  model, X_train, X_test, y_train, y_test = split(X, Y)
+  X_train, X_test, y_train, y_test = split(X, Y)
 
   optimizer = tf.keras.optimizers.RMSprop(learning_rate=0.001)
 
