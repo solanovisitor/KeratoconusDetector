@@ -57,6 +57,10 @@ def split(X, Y):
 
   X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size = 0.3, random_state = 0)
 
+  return X_train, X_test, y_train, y_test
+
+def lstm():
+
   model = keras.Sequential(
     [
       tf.keras.layers.Conv1D(filters=32, kernel_size=3, padding='same', activation='relu'),
@@ -66,12 +70,14 @@ def split(X, Y):
     ]
   )
 
-  return model, X_train, X_test, y_train, y_test
+  return model
 
 
 def train_model(args):
 
   X, Y = input_fn(args)
+
+  model = lstm()
   
   model, X_train, X_test, y_train, y_test = split(X, Y)
 
@@ -83,7 +89,6 @@ def train_model(args):
 
   model_name = 'keras_model.h5'
   model_name_local = os.path.join('/tmp', model_name)
-  callback_checkpoint_path = os.path.join(args.job_dir, 'model', model_name)
   callback_checkpoint = tf.keras.callbacks.ModelCheckpoint(
             filepath=model_name_local,
             save_best_only=False,
