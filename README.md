@@ -1,4 +1,14 @@
-# Data conformer for Galilei G6
+# Galilei G6 ML algorithm for keratoconus classification.
+
+ You will find a script for preparing data (data_conformer.py) and 
+a script for preprocessing and training with the data.
+
+ This experiment is using a CNN plus an LSTM for binary classification, where:
+
+ 1 = Exam positive for keratoconus.
+ 0 = Exam with normal characteristics.
+
+# Data conformer
 
 This is a software to pull data from Galilei G6, an ophthalmologic equipment used for eye biometrics.
 
