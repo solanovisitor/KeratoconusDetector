@@ -87,7 +87,7 @@ def train_model(args):
   callback_checkpoint = tf.keras.callbacks.ModelCheckpoint(
             filepath=model_name_local,
             save_best_only=False,
-            save_weights_only=False,  # https://github.com/tensorflow/tensorflow/issues/38745
+            save_weights_only=False,
             save_freq='epoch'
           )
 
