@@ -61,7 +61,7 @@ def split(X, Y):
     [
       tf.keras.layers.Conv1D(filters=32, kernel_size=3, padding='same', activation='relu'),
       tf.keras.layers.MaxPooling1D(pool_size=2),
-      tf.keras.layers.LSTM(15),
+      tf.keras.layers.LSTM(100),
       tf.keras.layers.Dense(1, activation='sigmoid')
     ]
   )
@@ -75,7 +75,9 @@ def train_model(args):
   
   model, X_train, X_test, y_train, y_test = split(X, Y)
 
-  model.compile(optimizer='rmsprop', loss='binary_crossentropy', metrics=[[tf.keras.metrics.BinaryAccuracy()], [tf.keras.metrics.AUC()]])
+  optimizer = tf.keras.optimizers.RMSprop(learning_rate=0.001)
+
+  model.compile(optimizer=optimizer, loss='binary_crossentropy', metrics=[[tf.keras.metrics.BinaryAccuracy()], [tf.keras.metrics.AUC()]])
 
   callback_list = []
 
@@ -96,10 +98,6 @@ def train_model(args):
   callback_list.append(callback_tboard)
 
   model.fit(X_train, y_train, epochs=40, batch_size=32, verbose=1, validation_data=(X_test, y_test), callbacks=callback_list)
-
-  results = model.evaluate(X_test, y_test, batch_size=1)
-
-  return results
 
 
 if __name__ == '__main__':
