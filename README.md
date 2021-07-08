@@ -17,3 +17,15 @@ You can see this script takes 2 positional arguments:
 2. Out: The path for your output csv file.
 
 The output should be a single csv with 15 columns and 18k rows representing the measures.
+
+# Training
+
+You can train the model by running:
+
+"python3 train.py --pos_folder --neg_folder --job_dir"
+
+Where:
+
+1. pos_folder is the directory where all the positive class samples are.
+2. neg_folder is the directory where all the negative class samples are.
+3. job_dir is the directory pointed for saving the model and tensorboard.
