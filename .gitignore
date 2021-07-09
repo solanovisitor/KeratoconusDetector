@@ -130,6 +130,5 @@ dmypy.json
 .pyre/
 
 # Data
-.csv
-*.csv
 data/
+model/

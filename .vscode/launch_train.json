@@ -5,9 +5,9 @@
             "name": "Python: Current File",
             "type": "python",
             "request": "launch",
-            "program": "${file}",
+            "program": "train.py",
             "console": "integratedTerminal",
-            "args": ["--pos_folder", "/home/solano/Downloads/outputs_alterados", "--neg_folder", "/home/solano/Downloads/outputs_normais", "--job_dir", "/home/solano/"]
+            "args": ["--pos_folder", "/home/solano/galilei_conformer/data/outputs_alterados", "--neg_folder", "/home/solano/galilei_conformer/data/outputs_normais", "--job_dir", "/home/solano/"]
         }
     ]
 }

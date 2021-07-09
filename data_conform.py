@@ -1,10 +1,9 @@
-import csv
 import pandas as pd
 import os
 import argparse
 import sys
 from tqdm import tqdm
-from parser_script import PathType
+from parser_validation import PathType
 
 
 def input_fn(args):
