@@ -5,12 +5,32 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "ETL",
+            "name": "Train",
             "type": "python",
             "request": "launch",
             "program": "/home/solano/biometrics/lstm/etl_task.py",
             "console": "integratedTerminal",
-            "args": ["--path", "/home/solano/normais_teste/", "--out", "/home/solano/normais_teste_out"]
+            "args": [
+                "--pos_folder",
+                "/home/solano/normais_teste_out/",
+                "--neg_folder",
+                "/home/solano/alterados_teste_out/",
+                "--job_dir",
+                "/home/solano/biometrics_lstm/model/"
+            ]
+        },
+        {
+            "name": "ETL",
+            "type": "python",
+            "request": "launch",
+            "program": "/home/solano/biometrics_lstm/etl_task.py",
+            "console": "integratedTerminal",
+            "args": [
+                "--path",
+                "/home/solano/Downloads/exames_normais/",
+                "--out",
+                "/home/solano/normais_teste_out"
+            ]
         }
     ]
 }
