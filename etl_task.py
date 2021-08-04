@@ -5,13 +5,23 @@ from parser_validation import PathType
 
 def list_dirs(args):
 
+    ''' 
+        This function will list all the directories containing the examination folders.
+        Finally, will return the folders' paths as a list.
+    '''
+
     subfolders = [ f.path for f in os.scandir(args.path) if f.is_dir() ]
 
     return subfolders
 
 def concat_data(path):
 
-    #os.chdir(path)
+    ''' 
+        This is the main function.
+        It takes the path of a folder, opens every .csv file and concatenate in a single .csv.
+        Then, we drop all the coordinates and remain with the measurements' columns in a DataFrame
+    '''
+
     fieldnames = ['Ant. Elevation BFA_[um]',
                   'Ant. Elevation BFS_[um]',
                   'Ant. Elevation BFTA_[um]',
@@ -35,8 +45,6 @@ def concat_data(path):
         if os.path.isfile(full_path):
             all_filenames.append(full_path)
 
-    #all_filenames = [i for i in glob.glob('*.{}'.format('csv'))]
-
     dfs = []
     for file_path in all_filenames:
         data = pd.read_csv(file_path, delimiter=';', iterator=True, chunksize=1000)
@@ -44,14 +52,18 @@ def concat_data(path):
         dfs.append(df)
     
     newone = pd.concat(dfs, axis=1)
-    newone.fillna(' ', inplace = True)
+    # Filling nulls with 0 because those are very few (only for the first coordinate)
+    newone.fillna(0, inplace = True)
     perm = newone[fieldnames]
     
     return perm
 
-def save_csv(args, x, perm):
+def save_csv(args, file_name, perm):
 
-    out_name = f'output_patient_{x}.csv'
+    '''
+        This function takes the DataFrame and saves this final format in a .csv file.
+    '''
+    out_name = f'output_patient_{file_name}.csv'
     output_path = os.path.join(args.out, out_name)
     perm.to_csv(output_path, index=False)
 
@@ -68,6 +80,6 @@ if __name__ == '__main__':
     comp = len(subfolders)
 
     for folder in subfolders:
-        x = os.path.split(folder)[1]
+        file_name = os.path.split(folder)[1]
         perm = concat_data(path=folder)
         save_csv(args, x, perm)
