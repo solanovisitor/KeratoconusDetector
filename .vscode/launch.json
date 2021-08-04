@@ -5,6 +5,15 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Generate Predictions",
+            "type": "python",
+            "request": "launch",
+            "program": "/home/solano/biometrics_lstm/predict.py",
+            "console": "integratedTerminal",
+            "args": ["--test_folder", "/home/solano/teste_alterados/",
+                     "--model_path", "/home/solano/biometrics_lstm/model/keras_model.h5"]
+        },
+        {
             "name": "Train",
             "type": "python",
             "request": "launch",
