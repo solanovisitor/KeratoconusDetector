@@ -19,14 +19,14 @@ This is a software to pull data from Galilei G6, an ophthalmologic equipment use
 5. pip install -r requirements_conform.txt
 6. When requirements are installed, run the file as the following:
 
-'python data_conform.py --path --out'
+'python etl_task.py --path --out'
 
 You can see this script takes 2 positional arguments:
 
 1. path is the directory containing all patients.
 2. out is the path for your output csv file.
 
-The output should be a single csv with 15 columns and 18k rows representing the measures.
+The output should be a single csv per examination, containing 15 columns and 18k rows representing the measures.
 
 # Training
 

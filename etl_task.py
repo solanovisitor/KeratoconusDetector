@@ -1,7 +1,6 @@
 import os
 import pandas as pd
 import argparse
-from functools import reduce
 from parser_validation import PathType
 
 def list_dirs(args):

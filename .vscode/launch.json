@@ -8,7 +8,7 @@
             "name": "Train",
             "type": "python",
             "request": "launch",
-            "program": "/home/solano/biometrics/lstm/etl_task.py",
+            "program": "/home/solano/biometrics_lstm/train.py",
             "console": "integratedTerminal",
             "args": [
                 "--pos_folder",

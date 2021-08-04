@@ -61,6 +61,7 @@ def input_fn(args):
     data.drop(index=data.index[0], 
               axis=0, 
               inplace=True)
+    data.replace(' ', 0, inplace=True)
     data = data.apply(pd.to_numeric)
     arr = data.to_numpy()
     np.reshape(arr,(1, 18001, 15))
@@ -73,6 +74,7 @@ def input_fn(args):
     data.drop(index=data.index[0], 
               axis=0, 
               inplace=True)
+    data.replace(' ', 0, inplace=True)
     data = data.apply(pd.to_numeric)
     arr = data.to_numpy()
     np.reshape(arr,(1, 18001, 15))
@@ -90,7 +92,7 @@ def input_fn(args):
 
 def split(X, Y):
 
-  X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size = 0.3, random_state = 0)
+  X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size = 0.2, random_state = 0)
 
   return X_train, X_test, y_train, y_test
 
@@ -118,7 +120,7 @@ def train_model(args):
   
   X_train, X_test, y_train, y_test = split(X, Y)
 
-  optimizer = tf.keras.optimizers.RMSprop(learning_rate=0.001)
+  optimizer = tf.keras.optimizers.RMSprop(learning_rate=10e-5)
 
   model.compile(optimizer=optimizer, loss='binary_crossentropy', metrics=[[tf.keras.metrics.BinaryAccuracy()], [tf.keras.metrics.AUC()]])
 
@@ -135,11 +137,11 @@ def train_model(args):
 
   callback_list.append(callback_checkpoint)
 
-  callback_tboard = tf.keras.callbacks.TensorBoard(log_dir=os.path.join(args.job_dir, 'tensorboard'))
+  callback_tboard = tf.keras.callbacks.TensorBoard(log_dir=os.path.join(args.job_dir, 'tensorboard_3'))
 
   callback_list.append(callback_tboard)
 
-  model.fit(X_train, y_train, epochs=40, batch_size=32, verbose=1, validation_data=(X_test, y_test), callbacks=callback_list)
+  model.fit(X_train, y_train, epochs=600, batch_size=32, verbose=1, validation_data=(X_test, y_test), callbacks=callback_list)
 
 
 if __name__ == '__main__':
