@@ -49,6 +49,7 @@ def concat_data(path):
     for file_path in all_filenames:
         data = pd.read_csv(file_path, delimiter=';', iterator=True, chunksize=1000)
         data.round(4)
+        data.replace(' ', 0, inplace=True)
         df = pd.concat(data, ignore_index=True)
         dfs.append(df)
     

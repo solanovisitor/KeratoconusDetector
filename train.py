@@ -61,7 +61,6 @@ def input_fn(args):
     data.drop(index=data.index[0], 
               axis=0, 
               inplace=True)
-    data.replace(' ', 0, inplace=True)
     data = data.apply(pd.to_numeric)
     arr = data.to_numpy()
     np.reshape(arr,(1, 18001, 15))
@@ -74,7 +73,6 @@ def input_fn(args):
     data.drop(index=data.index[0], 
               axis=0, 
               inplace=True)
-    data.replace(' ', 0, inplace=True)
     data = data.apply(pd.to_numeric)
     arr = data.to_numpy()
     np.reshape(arr,(1, 18001, 15))
