@@ -48,6 +48,7 @@ def concat_data(path):
     dfs = []
     for file_path in all_filenames:
         data = pd.read_csv(file_path, delimiter=';', iterator=True, chunksize=1000)
+        data.round(4)
         df = pd.concat(data, ignore_index=True)
         dfs.append(df)
     
@@ -82,4 +83,4 @@ if __name__ == '__main__':
     for folder in subfolders:
         file_name = os.path.split(folder)[1]
         perm = concat_data(path=folder)
-        save_csv(args, x, perm)
+        save_csv(args, file_name, perm)
