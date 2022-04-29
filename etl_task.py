@@ -1,4 +1,5 @@
 import os
+from numpy import NaN
 import pandas as pd
 import argparse
 from parser_validation import PathType
@@ -51,16 +52,17 @@ def concat_data(path):
         data = pd.read_csv(file_path, delimiter=';')# iterator=True)#, chunksize=1000)
         # print(data)
         data.round(4)
-        data.replace(' ', 0, inplace=True)
+        data.replace(' ', NaN, inplace=True)
+        data.fillna(data.mean(), inplace=True)
         df = data.iloc[:,-1]
         # 
         dfs.append(df)
     try:
         df = pd.concat(dfs, axis=1, ignore_index=True)
+        return df
     except:
+        print(path)
         pass
-
-    return df
 
 def save_csv(args, file_name, perm):
 
@@ -69,7 +71,10 @@ def save_csv(args, file_name, perm):
     '''
     out_name = f'output_patient_{file_name}.csv'
     output_path = os.path.join(args.out, out_name)
-    perm.to_csv(output_path, index=False)
+    try:
+        perm.to_csv(output_path, index=False)
+    except:
+        pass
 
 
 if __name__ == '__main__':
@@ -81,12 +86,9 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     subfolders = list_dirs(args)
-    # print(subfolders)
     comp = len(subfolders)
-    print(comp)
 
     for folder in subfolders:
         file_name = os.path.split(folder)[1]
-        print(folder)
         perm = concat_data(path=folder)
         save_csv(args, file_name, perm)
