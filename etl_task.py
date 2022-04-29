@@ -47,6 +47,7 @@ def concat_data(path):
             all_filenames.append(full_path)
 
     dfs = []
+    columns = []
     for file_path in all_filenames:
         # print(file_path)
         data = pd.read_csv(file_path, delimiter=';')# iterator=True)#, chunksize=1000)
@@ -55,10 +56,13 @@ def concat_data(path):
         data.replace(' ', NaN, inplace=True)
         data.fillna(data.mean(), inplace=True)
         df = data.iloc[:,-1]
+        column_name = data.columns[-1]
+        columns.append(column_name)
         # 
         dfs.append(df)
     try:
         df = pd.concat(dfs, axis=1, ignore_index=True)
+        df.columns = columns
         return df
     except:
         print(path)
