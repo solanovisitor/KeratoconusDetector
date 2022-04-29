@@ -32,13 +32,13 @@
             "name": "ETL",
             "type": "python",
             "request": "launch",
-            "program": "/home/solano/biometrics_lstm/etl_task.py",
+            "program": "/Users/solanotodes/Documents/biometrics_lstm/etl_task.py",
             "console": "integratedTerminal",
             "args": [
                 "--path",
-                "/home/solano/Downloads/exames_normais/",
+                "/Users/solanotodes/Documents/biometrics_lstm/alterados/ALTERADOS",
                 "--out",
-                "/home/solano/normais_teste_out"
+                "/Users/solanotodes/Documents/biometrics_lstm/alterados/"
             ]
         }
     ]

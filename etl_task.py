@@ -47,18 +47,20 @@ def concat_data(path):
 
     dfs = []
     for file_path in all_filenames:
-        data = pd.read_csv(file_path, delimiter=';', iterator=True, chunksize=1000)
+        # print(file_path)
+        data = pd.read_csv(file_path, delimiter=';')# iterator=True)#, chunksize=1000)
+        # print(data)
         data.round(4)
         data.replace(' ', 0, inplace=True)
-        df = pd.concat(data, ignore_index=True)
+        df = data.iloc[:,-1]
+        # 
         dfs.append(df)
-    
-    newone = pd.concat(dfs, axis=1)
-    # Filling nulls with 0 because those are very few (only for the first coordinate)
-    newone.fillna(0, inplace = True)
-    perm = newone[fieldnames]
-    
-    return perm
+    try:
+        df = pd.concat(dfs, axis=1, ignore_index=True)
+    except:
+        pass
+
+    return df
 
 def save_csv(args, file_name, perm):
 
@@ -79,9 +81,12 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     subfolders = list_dirs(args)
+    # print(subfolders)
     comp = len(subfolders)
+    print(comp)
 
     for folder in subfolders:
         file_name = os.path.split(folder)[1]
+        print(folder)
         perm = concat_data(path=folder)
         save_csv(args, file_name, perm)
